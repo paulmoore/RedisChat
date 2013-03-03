@@ -9,17 +9,18 @@
 			$message = $_POST['message'];
 			if (isset($_POST['channel'])) {
 				$channel = $_POST['channel'];
-				$message = array(
-					'name' => $name,
-					'message' => $message,
-					'channel' => $channel
-				);
-				$ret = array('status' => 'OK');
-				$redis->publish($channel, json_encode($message));
-				$redis->expire("user:$name", 60 * 3);
 			} else {
-				$ret = array('err' => 'Missing channel');
+				$channel = 'all';
 			}
+			$message = array(
+				'name' => $name,
+				'message' => $message,
+				'channel' => $channel
+			);
+			$ret = array('status' => 'OK');
+			$redis->publish("channel:$channel", json_encode($message));
+			$redis->expire("user:$name", 60 * 3);
+			$redis->expire("channels:$name", 60 * 3);
 		} else {
 			$ret = array('err' => 'Missing message');
 		}
