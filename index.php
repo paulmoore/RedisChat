@@ -78,13 +78,13 @@
 					var arg = command.substr("/chat".length + 1);
 					var dchat = arg.split(" ");
 					var channel = dchat[0];
-					var message = dchat[1];
+					var message = ExcessiveRebuildString(1, dchat);
 					sendChat(channel, message);
 				} else if (command.startsWith("/tell")) {
 					var arg = command.substr("/tell".length + 1);
 					var dtell = arg.split(" ");
 					var recipient = dtell[0];
-					var message = dtell[1];
+					var message = ExcessiveRebuildString(1, dchat);
 					sendTell(recipient, message);
 				} else if (command.startsWith("/whois")) {
 					var arg = command.substr("/whois".length + 1);
@@ -386,6 +386,43 @@
 				text += message;
 				var box = $("#chatbox");
 				box.val(box.val() + text + "\n");
+			}
+
+			/**
+			 * Rebuilds a string after it has been split on spaces (and adds
+			 * spaces back in). Why is this a function? Because I can.
+
+
+						 `""==,,__  
+			        `"==..__"=..__ _    _..-==""_
+			             .-,`"=/ /\ \""/_)==""``
+			            ( (    | | | \/ |
+			             \ '.  |  \;  \ /
+			              |  \ |   |   ||
+			         ,-._.'  |_|   |   ||
+			        .\_/\     -'   ;   Y
+			       |  `  |        /    |-.
+			       '. __/_    _.-'     /'
+			   jgs        `'-.._____.-'
+
+			
+			 *
+			 * @param int startIndex The index of the array to begin rebuilding 
+			 *						 the string with.
+			 * @param string[] theStringArray The source array to rebuild from.
+			 *
+			 * @return string A beautiful string.
+			 */
+			function ExcessiveRebuildString(startIndex, theStringArray)
+			{
+				var str = "";
+
+				for (var i = startIndex; i < theStringArray.length - 1; i++)
+					str += theStringArray[i] + " ";
+
+				str += theStringArray[theStringArray.length - 1];
+
+				return str;
 			}
 		</script>
 	</body>
