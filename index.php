@@ -84,7 +84,7 @@
 					var arg = command.substr("/tell".length + 1);
 					var dtell = arg.split(" ");
 					var recipient = dtell[0];
-					var message = ExcessiveRebuildString(1, dchat);
+					var message = ExcessiveRebuildString(1, dtell);
 					sendTell(recipient, message);
 				} else if (command.startsWith("/whois")) {
 					var arg = command.substr("/whois".length + 1);
