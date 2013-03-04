@@ -386,6 +386,7 @@
 				text += message;
 				var box = $("#chatbox");
 				box.val(box.val() + text + "\n");
+				box.scrollTop(box[0].scrollHeight);
 			}
 		</script>
 	</body>
