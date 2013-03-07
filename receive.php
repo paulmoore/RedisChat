@@ -1,4 +1,12 @@
 <?php
+	/**
+	 * receive.php
+	 * Called by the client to long poll for new messages.
+	 * The client needs to send:
+	 * - user name
+	 *
+	 * @author Paul
+	 */
 	require_once 'conn.php';
 
 	$ret = null;
@@ -7,7 +15,6 @@
 	if (isset($_POST['name'])) {
 		$name = $_POST['name'];
 		$channels = $redis->smembers("channels:$name");
-		//var_dump($channels);
 		$pubsub = $redis->pubSub();
 		$pubsub->subscribe($channels);
 		foreach ($pubsub as $message) {
@@ -29,6 +36,7 @@
 		$ret = array('err' => 'You do not have a user, use the /me command');
 	}
 
+	// this needs to be called for the connection to deinit properly
 	unset($pubsub);
 
 	header('Content-Type: application/json');

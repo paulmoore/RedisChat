@@ -1,4 +1,14 @@
 <?php
+	/**
+	 * join.php
+	 * Have the user join a channel.
+	 * The client has to send:
+	 * - user name
+	 * - channel name
+	 *
+	 * @author Paul
+	 */
+	
 	require_once 'conn.php';
 
 	$ret = null;
@@ -9,6 +19,7 @@
 			$channel = $_POST['channel'];
 			$count = $redis->sadd("channels:$name", "channel:$channel");
 			if ($count > 0) {
+				// notify all users in the channel that we have joined the channel
 				$redis->publish("channel:$name", 'CANCEL');
 				$redis->publish("channel:$channel", json_encode(array(
 					'name' => 'SERVER',

@@ -1,5 +1,10 @@
 <!DOCTYPE html>
 <html>
+	<!--
+		Redis Chat Client
+		COSC 416 Redis Assignment
+		@author Paul
+	-->
 	<head>
 		<title>Redis Chat Server</title>
 	</head>
@@ -24,6 +29,10 @@
 			var username, oldname;
 			var polling = false;
 
+			/**
+			 * Apparently some browsers don't have this?
+			 * How to JS?
+			 */
 			if (!String.prototype.startsWith) {
 				Object.defineProperty(String.prototype, 'startsWith', {
 					enumerable: false,
@@ -37,6 +46,7 @@
 			}
 
 			$(function() {
+				// the user can enter a chat message via the Send button or the 'enter' key
 				$("#sendbtn").click(function() {
 					console.log("sendbtn clicked");
 					parseCommand($("#chatbar").val());
@@ -49,6 +59,8 @@
 						$("#chatbar").val("");
 				    }
 				});
+				// delete the user when they leave the page
+				// this does not work ATM for some reason
 				$(window).on("beforeunload", function() {
 					cancelLongPoll(true);
 					deleteMe();

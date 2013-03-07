@@ -1,4 +1,12 @@
 <?php
+	/**
+	 * conn.php
+	 * Creates a connection to Redis and stores it in the $redis variable.
+	 * Not an AJAX page.
+	 *
+	 * @author Paul
+	 */
+
 	require_once 'Predis/Autoloader.php';
 
 	Predis\Autoloader::register();

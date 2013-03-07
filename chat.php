@@ -1,4 +1,15 @@
 <?php
+	/**
+	 * chat.php
+	 * Sends a chat message.
+	 * The client needs to send:
+	 * - user name
+	 * - message
+	 * - channel name (optional)
+	 *
+	 * @author Paul
+	 */
+
 	require_once 'conn.php';
 
 	$ret = null;
@@ -7,16 +18,19 @@
 		$name = $_POST['name'];
 		if (isset($_POST['message'])) {
 			$message = $_POST['message'];
+			// the channel defaults to the 'all' channel
 			if (isset($_POST['channel'])) {
 				$channel = $_POST['channel'];
 			} else {
 				$channel = 'all';
 			}
+			// the message is stored as a serialized JSON object
 			$message = array(
 				'name' => $name,
 				'message' => $message,
 				'channel' => $channel
 			);
+			// publish the message, refresh the expiration on the user
 			$ret = array('status' => 'OK');
 			$redis->publish("channel:$channel", json_encode($message));
 			$redis->expire("user:$name", 60 * 3);

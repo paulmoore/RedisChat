@@ -1,4 +1,15 @@
 <?php
+	/**
+	 * tell.php
+	 * Sends a direct message from one user to another (whisper).
+	 * The client needs to send:
+	 * - user name
+	 * - message
+	 * - recipient name
+	 *
+	 * @author Paul
+	 */
+
 	require_once 'conn.php';
 
 	$ret = null;
@@ -15,7 +26,9 @@
 					'message' => $message
 				);
 				$ret = array('status' => 'OK');
+				// whisper the message to the recipient's private channel
 				$redis->publish("channel:$recipient", json_encode($message));
+				// refresh the expiration on the user
 				$redis->expire("user:$name", 60 * 3);
 				$redis->expire("channels:$name", 60 * 3);
 			} else {

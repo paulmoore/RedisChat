@@ -1,4 +1,14 @@
 <?php
+	/**
+	 * whois.php
+	 * Returns all information on a user.
+	 * The client must send:
+	 * - user name
+	 * - name of the user to get
+	 *
+	 * @author Paul
+	 */
+
 	require_once 'conn.php';
 
 	$ret = null;
