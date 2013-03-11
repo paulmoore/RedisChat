@@ -20,17 +20,17 @@
 			$message = $_POST['message'];
 			if (isset($_POST['recipient'])) {
 				$recipient = $_POST['recipient'];
-				$message = array(
+				// whisper the message to the recipient's private channel
+				$message = json_encode(array(
 					'name' => $name,
 					'channel' => $recipient,
 					'message' => $message
-				);
+				));
 				$ret = array('status' => 'OK');
-				// whisper the message to the recipient's private channel
-				$redis->publish("channel:$recipient", json_encode($message));
-				// refresh the expiration on the user
-				$redis->expire("user:$name", 60 * 3);
-				$redis->expire("channels:$name", 60 * 3);
+				//////////////////
+				// Assignment	//
+				//////////////////
+				// TODO: publish the message to the recipient's channel
 			} else {
 				$ret = array('err' => 'Missing recipient');
 			}

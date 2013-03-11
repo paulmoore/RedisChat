@@ -20,11 +20,15 @@
 			$count = $redis->srem("channels:$name", "channel:$channel");
 			if ($count > 0) {
 				// notify all users in the channel that we have left
-				$redis->publish("channel:$name", 'CANCEL');
-				$redis->publish("channel:$channel", json_encode(array(
+				$message = json_encode(array(
 					'name' => 'SERVER',
 					'message' => "$name has left channel: $channel"
-				)));
+				));
+				//////////////////
+				// Assignment	//
+				//////////////////
+				// TODO: publish 'CANCEL' to the user's channel (will cancel the long polling request in receive.php)
+				// TODO: publish the message to the channel
 			}
 			$ret = array('status' => 'OK');
 		} else {

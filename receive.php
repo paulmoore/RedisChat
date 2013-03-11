@@ -13,10 +13,14 @@
 	$pubsub = null;
 
 	if (isset($_POST['name'])) {
+		//////////////////
+		// Assignment	//
+		//////////////////
 		$name = $_POST['name'];
-		$channels = $redis->smembers("channels:$name");
+		$channels = null;
+		// TODO: populate channels will all channels the user is subscribed to
 		$pubsub = $redis->pubSub();
-		$pubsub->subscribe($channels);
+		// TODO: subscribe to all of the channels
 		foreach ($pubsub as $message) {
 			switch ($message->kind) {
 				case 'subscribe':
@@ -28,7 +32,7 @@
 					} else {
 						$ret = json_decode($message->payload);
 					}
-					$pubsub->unsubscribe();
+					// TODO: unsubscribe from the channel
 					break;
 			}
 		}

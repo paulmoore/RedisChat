@@ -7,6 +7,13 @@
 	 * - message
 	 * - channel name (optional)
 	 *
+	 * Assignment notes:
+ 	 * When talking to Redis, we use the following format for channels: channel:name
+ 	 * 		i.e. The channel "redisrox" would be specified by "channel:redisrox".
+ 	 * 
+ 	 * Users are similar to the aforementioned channels, we use user:name.
+ 	 * 		i.e. "user:stephen".
+	 *
 	 * @author Paul
 	 */
 
@@ -25,16 +32,17 @@
 				$channel = 'all';
 			}
 			// the message is stored as a serialized JSON object
-			$message = array(
+			$message = json_encode(array(
 				'name' => $name,
 				'message' => $message,
 				'channel' => $channel
-			);
+			));
 			// publish the message, refresh the expiration on the user
 			$ret = array('status' => 'OK');
-			$redis->publish("channel:$channel", json_encode($message));
-			$redis->expire("user:$name", 60 * 3);
-			$redis->expire("channels:$name", 60 * 3);
+			//////////////////
+			// Assignment	//
+			//////////////////
+			// TODO: publish the message to the channel
 		} else {
 			$ret = array('err' => 'Missing message');
 		}

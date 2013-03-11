@@ -26,26 +26,21 @@
 			$ret = array('err' => 'That user name already exists!');
 		} else {
 			// if the user is already identified, we can delete his old user
+			//////////////////
+			// Assignment	//
+			//////////////////
 			if (isset($_POST['oldname'])) {
 				$oldname = $_POST['oldname'];
-				$redis->del("user:$oldname");
-				$redis->del("channels:$oldname");
+				// TODO: delete the user's old HASH
+				// TODO: delete the user's old channel SET
 			}
-			$redis->hmset("user:$name", array(
-				'name' => $name,
-				'age' => $age,
-				'sex' => $sex,
-				'location' => $location
-			));
-			// if the user dosn't do anything for 3 minutes, delete him
-			$redis->expire("user:$name", 60 * 3);
-			$redis->sadd("channels:$name", "channel:$name", 'channel:all');
-			$redis->expire("channels:$name", 60 * 3);
-			// notify everyone we have joined the server
-			$redis->publish('channel:all', json_encode(array(
+			// TODO: create the user's HASH object
+			$message = json_encode(array(
 				'name' => 'SERVER',
 				'message' => "$name has joined the server"
-			)));
+			));
+			// notify everyone we have joined the server
+			// TODO: publish to the 'channel:all' channel the message
 			$ret = array('status' => 'OK');
 		}
 	} else {

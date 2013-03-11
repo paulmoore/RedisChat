@@ -4,6 +4,18 @@
 		Redis Chat Client
 		COSC 416 Redis Assignment
 		@author Paul
+
+		You need to modify the following to get the client to work:
+			- chat.php
+			- delete.php
+			- join.php
+			- leave.php
+			- me.php
+			- receive.php
+			- tell.php
+
+		The places that you need to modify are marked with TODOs.
+		whois.php has been implemented and can be used as an example of how to send a redis command.
 	-->
 	<head>
 		<title>Redis Chat Server</title>

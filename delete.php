@@ -15,14 +15,21 @@
 	if (isset($_POST['name'])) {
 		$name = $_POST['name'];
 		// need to make sure to delete both objects belonging to the user
-		$redis->del("user:$name");
-		$redis->del("channels:$name");
+		//////////////////
+		// Assignment	//
+		//////////////////
+		// TODO: delete the user's HASH
+		// TODO: delete the user's channel SET
 		// notify everyone the player has left the server
-		$redis->publish("channel:$name", 'CANCEL');
-		$redis->publish('channel:all', json_encode(array(
+		$message = json_encode(array(
 			'name' => 'SERVER',
 			'message' => "$name has left the server"
-		)));
+		));
+		//////////////////
+		// Assignment	//
+		//////////////////
+		// TODO: publish 'CANCEL' to the user's channel (will cancel the long polling request in receive.php)
+		// TODO: publish to the 'channel:all' channel the left the server message.
 		$ret = array('status' => 'OK');
 	} else {
 		$ret = array('err' => 'Missing field age');

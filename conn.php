@@ -13,8 +13,8 @@
 
 	$redis = new Predis\Client(array(
 		'scheme' => 'tcp',
-		'host'   => '127.0.0.1',
-		'port'   => 6379,
+		'host'   => 'gpu1.ddl.ok.ubc.ca',
+		'port'   => 50030,
 		'read_write_timeout' => 0
 	));
 ?>
